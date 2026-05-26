@@ -1,0 +1,201 @@
+{
+  "name": "Clone Frequência Vibracional",
+  "version": "1.0.0",
+  "description": "Clone funcional do funil de quiz de frequência vibracional",
+  "original_url": "https://testefrequencia.misteriosdaalma.com/",
+  "technology": {
+    "original": "Vue2 + Webpack SPA",
+    "clone": "HTML5 + CSS3 + JavaScript ES6 (vanilla)"
+  },
+  "funnel_map": {
+    "steps": [
+      {
+        "id": 1,
+        "name": "gender",
+        "title": "Seleção de Gênero",
+        "file": "step1.html",
+        "options": ["feminino", "masculino"],
+        "next": 2
+      },
+      {
+        "id": 2,
+        "name": "month",
+        "title": "Mês de Nascimento",
+        "file": "step2.html",
+        "options": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "next": 3
+      },
+      {
+        "id": 3,
+        "name": "day",
+        "title": "Dia de Nascimento",
+        "file": "step3.html",
+        "options": "01-31",
+        "next": 4
+      },
+      {
+        "id": 4,
+        "name": "decade",
+        "title": "Década de Nascimento",
+        "file": "step4.html",
+        "options": [1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010],
+        "next": 5
+      },
+      {
+        "id": 5,
+        "name": "year",
+        "title": "Ano de Nascimento",
+        "file": "step5.html",
+        "options": "dynamic (decade to decade+9)",
+        "next": 6
+      },
+      {
+        "id": 6,
+        "name": "civil_status",
+        "title": "Estado Civil",
+        "file": "step6.html",
+        "options": ["casado", "namorando", "noivo", "solteiro", "separado", "viuvo"],
+        "next": 7
+      },
+      {
+        "id": 7,
+        "name": "challenge",
+        "title": "Maior Desafio",
+        "file": "step7.html",
+        "options": ["amor", "financas", "saude", "felicidade"],
+        "next": 8
+      },
+      {
+        "id": 8,
+        "name": "name",
+        "title": "Primeiro Nome",
+        "file": "step8.html",
+        "validation": {
+          "no_numbers": true,
+          "no_spaces": true,
+          "required": true
+        },
+        "next": "loading"
+      }
+    ],
+    "post_quiz": [
+      {
+        "id": "loading",
+        "name": "loading",
+        "title": "Tela de Carregamento",
+        "duration_ms": 3500,
+        "next": "warning"
+      },
+      {
+        "id": "warning",
+        "name": "warning",
+        "title": "Modal de Urgência",
+        "next": "audio"
+      },
+      {
+        "id": "audio",
+        "name": "audio_vsl",
+        "title": "Player de Áudio + VSL",
+        "audio_logic": {
+          "part1": {
+            "pattern": "audio/p1v2/{gender}_{age}_{civil}.mp3",
+            "variables": {
+              "gender": "h|m",
+              "age": "20|30|40|50|60",
+              "civil": "c|s"
+            },
+            "total_combinations": 20
+          },
+          "part2": {
+            "pattern": "audio/p2v2/{file}.mp3",
+            "conditional": {
+              "financas": "dinheiro.mp3",
+              "saude": "saude.mp3",
+              "felicidade": "felicidade.mp3",
+              "amor_homem_casado": "h_casado.mp3",
+              "amor_homem_solteiro": "h_solteiro.mp3",
+              "amor_mulher_casada": "m_casada.mp3",
+              "amor_mulher_solteira": "m_solteira.mp3"
+            },
+            "total_files": 7
+          }
+        }
+      }
+    ]
+  },
+  "vsl": {
+    "provider": "ConverteAI (VTurb)",
+    "account_id": "0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5",
+    "player_id": "6841b662f59c67de93338696",
+    "script_url": "https://scripts.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/player.js",
+    "thumbnail_url": "https://images.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/thumbnail.jpg"
+  },
+  "assets": {
+    "images": [
+      "img/female.png",
+      "img/masculine.png",
+      "img/bg_divino.png",
+      "img/dark-bg-wide.jpg",
+      "img/stop.png",
+      "img/pause.png",
+      "img/favicon.png",
+      "img/casado.png",
+      "img/namorando.png",
+      "img/noivo.png",
+      "img/solteiro.png",
+      "img/divorciado.png",
+      "img/viuvo.png",
+      "img/assets/certidao.png",
+      "img/assets/famosos.png",
+      "img/assets/img_nome_vibracao.png",
+      "img/assets/frequencia.png",
+      "img/assets/fardo.png",
+      "img/assets/frequencia_justa.png",
+      "img/assets/mantra.png",
+      "img/assets/biblico.png",
+      "img/assets/raro.png",
+      "img/assets/relax.png",
+      "img/assets/revelacao.png",
+      "img/assets/bloqueio_frequencia.png",
+      "img/assets/caminho_frequencia.png",
+      "img/assets/loop1.gif"
+    ],
+    "audio_p1v2": [
+      "audio/p1v2/h_20_c.mp3",
+      "audio/p1v2/h_20_s.mp3",
+      "audio/p1v2/h_30_c.mp3",
+      "audio/p1v2/h_30_s.mp3",
+      "audio/p1v2/h_40_c.mp3",
+      "audio/p1v2/h_40_s.mp3",
+      "audio/p1v2/h_50_c.mp3",
+      "audio/p1v2/h_50_s.mp3",
+      "audio/p1v2/h_60_c.mp3",
+      "audio/p1v2/h_60_s.mp3",
+      "audio/p1v2/m_20_c.mp3",
+      "audio/p1v2/m_20_s.mp3",
+      "audio/p1v2/m_30_c.mp3",
+      "audio/p1v2/m_30_s.mp3",
+      "audio/p1v2/m_40_c.mp3",
+      "audio/p1v2/m_40_s.mp3",
+      "audio/p1v2/m_50_c.mp3",
+      "audio/p1v2/m_50_s.mp3",
+      "audio/p1v2/m_60_c.mp3",
+      "audio/p1v2/m_60_s.mp3"
+    ],
+    "audio_p2v2": [
+      "audio/p2v2/dinheiro.mp3",
+      "audio/p2v2/felicidade.mp3",
+      "audio/p2v2/saude.mp3",
+      "audio/p2v2/h_casado.mp3",
+      "audio/p2v2/h_solteiro.mp3",
+      "audio/p2v2/m_casada.mp3",
+      "audio/p2v2/m_solteira.mp3"
+    ]
+  },
+  "removed_trackers": [
+    "Facebook Pixel",
+    "Google Tag Manager (GTM)",
+    "Cloudflare Turnstile",
+    "Anti-devtools protection"
+  ]
+}
