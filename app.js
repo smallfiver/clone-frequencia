@@ -358,14 +358,63 @@
         `;
     }
 
+    // Slideshow images synced with audio
+    const slideshowImages = [
+        './img/assets/frequencia.png',
+        './img/assets/img_nome_vibracao.png',
+        './img/assets/raro.png',
+        './img/assets/biblico.png',
+        './img/assets/famosos.png',
+        './img/assets/certidao.png',
+        './img/assets/revelacao.png',
+        './img/assets/bloqueio_frequencia.png',
+        './img/assets/fardo.png',
+        './img/assets/caminho_frequencia.png',
+        './img/assets/frequencia_justa.png',
+        './img/assets/mantra.png',
+        './img/assets/relax.png'
+    ];
+    let slideshowInterval = null;
+    let currentSlideIndex = 0;
+
+    function startSlideshow() {
+        currentSlideIndex = 0;
+        const slideEl = document.getElementById('slideshowImg');
+        if (slideEl) {
+            slideEl.src = slideshowImages[0];
+            slideEl.style.opacity = '1';
+        }
+        slideshowInterval = setInterval(() => {
+            currentSlideIndex = (currentSlideIndex + 1) % slideshowImages.length;
+            const el = document.getElementById('slideshowImg');
+            if (el) {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.src = slideshowImages[currentSlideIndex];
+                    el.style.opacity = '1';
+                }, 400);
+            }
+        }, 8000);
+    }
+
+    function stopSlideshow() {
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+        }
+    }
+
     function renderAudio() {
         const name = state.firstNameValue || 'Visitante';
         return `
             <div class="audio-modal" id="audioModal">
                 <div class="audio-astrology-container">
                     <div class="bg-mgi"></div>
-                    <div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
-                        <div class="leitura-info">
+                    <div class="slideshow-container" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                        <img id="slideshowImg" src="./img/assets/frequencia.png" style="max-width:85%;max-height:70%;object-fit:contain;opacity:0;transition:opacity 0.5s ease;border-radius:10px;">
+                    </div>
+                    <div style="position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:20px;min-height:100%;">
+                        <div class="leitura-info" style="background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);border-radius:12px;padding:15px 25px;margin-bottom:15px;">
                             <h4>Leitura de Frequência para</h4>
                             <div class="nome">${name}</div>
                             <div class="elemento">Elemento: 🌱 Terra</div>
@@ -526,6 +575,9 @@
         state.currentStep = 11;
         render();
 
+        // Start slideshow
+        setTimeout(() => { startSlideshow(); }, 600);
+
         // Start playing audio p1v2
         setTimeout(() => {
             const audioPath = getAudioP1Path();
@@ -551,6 +603,7 @@
                     
                     // Show VSL after p2 starts
                     setTimeout(() => {
+                        stopSlideshow();
                         showVSL();
                     }, 5000);
                 });
