@@ -153,6 +153,7 @@
             case 9: stepContent = renderLoading(); break;
             case 10: stepContent = renderWarning(); break;
             case 11: stepContent = renderAudio(); break;
+            case 12: stepContent = renderVSL(); break;
         }
 
         if (state.currentStep <= 8) {
@@ -421,9 +422,6 @@
                             <div class="frequencia">Sua Frequência: <span id="freqStatus">Carregando...</span></div>
                         </div>
                         <div class="legendas" id="legendas"></div>
-                        <div id="vslContainer" class="vsl-container" style="display:none;margin-top:20px;">
-                            <div id="smartplayer"></div>
-                        </div>
                     </div>
                 </div>
                 <div class="buttons-audio-container">
@@ -624,23 +622,31 @@
         }
     }
 
-    function showVSL() {
-        const vslContainer = document.getElementById('vslContainer');
-        if (vslContainer) {
-            vslContainer.style.display = 'block';
-            // Load ConverteAI/VTurb player
-            vslContainer.innerHTML = `
-                <div id="vid_6841b662f59c67de93338696" style="position:relative;width:100%;padding:56.25% 0 0;">
-                    <img id="thumb_6841b662f59c67de93338696" src="https://images.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/thumbnail.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
-                    <div id="backdrop_6841b662f59c67de93338696" style="position:absolute;top:0;width:100%;height:100%;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);"></div>
+    function renderVSL() {
+        return `
+            <div class="vsl-page">
+                <div class="vsl-page-container">
+                    <div id="vid_6841b662f59c67de93338696" style="position:relative;width:100%;padding:56.25% 0 0;">
+                        <img id="thumb_6841b662f59c67de93338696" src="https://images.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/thumbnail.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
+                        <div id="backdrop_6841b662f59c67de93338696" style="position:absolute;top:0;width:100%;height:100%;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);"></div>
+                    </div>
                 </div>
-            `;
-            // Load the player script
-            const script = document.createElement('script');
-            script.src = 'https://scripts.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/player.js';
-            script.async = true;
-            document.head.appendChild(script);
-        }
+            </div>
+        `;
+    }
+
+    function loadVSLPlayer() {
+        const script = document.createElement('script');
+        script.src = 'https://scripts.converteai.net/0a246cdd-c6bd-48cb-b2bf-d2a8c03c2dd5/players/6841b662f59c67de93338696/player.js';
+        script.async = true;
+        document.head.appendChild(script);
+    }
+
+    function showVSL() {
+        state.currentStep = 12;
+        render();
+        // Load player script after rendering the VSL page
+        setTimeout(() => { loadVSLPlayer(); }, 300);
     }
 
     // ==================== INIT ====================
